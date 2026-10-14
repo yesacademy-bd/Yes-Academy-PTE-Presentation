@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>YES Academy · PTE Academic Orientation</title>
+<style>
+/* ==========================================================================
+   THEME (values are also editable in CONFIG.theme inside the script)
+   ========================================================================== */
+:root{
+  --red:#E10600;
+  --blue:#174A8B;
+  --white:#FFFFFF;
+  --light-blue:#EAF4FF;
+  --navy:#101B33;
+  --neutral:#F6F8FC;
+  --ink:#101B33;
+  --muted:#4A5873;
+  --line:#D5DFEE;
+  --dot:#C9D5E8;
+  --ease:cubic-bezier(.22,.8,.24,1);
+  --font:Inter,"Segoe UI",system-ui,-apple-system,Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden;background:var(--navy);font-family:var(--font);color:var(--ink);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+
+/* ---------- Stage: fixed 1920x1080 canvas scaled to the window ---------- */
+#deck{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--navy)}
+#stage{position:relative;flex:none;width:1920px;height:1080px;overflow:hidden;transform-origin:50% 50%;background:var(--neutral)}
+
+/* ---------- Slides and transitions ---------- */
+.slide{
+  position:absolute;inset:0;padding:120px 170px 170px;background:var(--neutral);overflow:hidden;
+  opacity:0;visibility:hidden;transform:translate3d(120px,0,0);
+  transition:opacity .7s var(--ease),transform .9s var(--ease),visibility 0s linear .9s;
+  will-change:transform,opacity;
+}
+.slide.is-active{opacity:1;visibility:visible;transform:none;z-index:2;transition:opacity .7s var(--ease),transform .9s var(--ease),visibility 0s}
+.slide.is-before{transform:translate3d(-120px,0,0)}
+.slide.is-after{transform:translate3d(120px,0,0)}
+.slide.is-section.is-before{transform:scale(1.04)}
+.slide.is-section.is-after{transform:scale(.96)}
+/* Non-adjacent jumps (Home, End, overview): fade only, no long travel */
+#deck.jump .slide{transform:none!important}
+#deck.jump .slide:not(.is-active){transition:opacity .45s linear,visibility 0s linear .45s}
+#deck.jump .slide.is-active{transition:opacity .45s linear,visibility 0s}
+
+.slide.dark{background:var(--navy);color:#fff}
+
+/* Element entrance: plays each time a slide becomes active */
+.slide.is-active .reveal{animation:rise .9s var(--ease) both;animation-delay:var(--d,0ms)}
+@keyframes rise{from{opacity:0;transform:translate3d(0,34px,0)}to{opacity:1;transform:none}}
+@keyframes pop{from{opacity:0;transform:scale(.45)}to{opacity:1;transform:scale(1)}}
+@keyframes growX{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes growY{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@keyframes drift{from{transform:translate3d(0,0,0)}to{transform:translate3d(-26px,20px,0)}}
+
+/* ---------- Brand + run header ---------- */
+.brand{position:absolute;left:170px;top:52px;z-index:5;display:flex;align-items:center;gap:16px}
+.wordmark{display:flex;align-items:baseline;gap:10px;font-weight:800;letter-spacing:.08em;font-size:30px;line-height:1}
+.wordmark .w-yes{color:var(--red)}
+.wordmark .w-acad{color:var(--navy)}
+.dark .wordmark .w-acad{color:#fff}
+.brand img{height:58px;width:auto;display:none}
+.brand.has-logo img{display:block}
+.brand.has-logo .wordmark{display:none}
+.runhead{position:absolute;right:170px;top:58px;z-index:5;font-size:22px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+
+/* ---------- Typography ---------- */
+.kicker{font-size:28px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--red);margin:0 0 14px}
+.title{font-size:76px;line-height:1.05;font-weight:800;letter-spacing:-.02em;margin:0;color:var(--navy)}
+.sub{font-size:34px;line-height:1.4;color:var(--muted);margin:16px 0 0;max-width:1400px}
+.head{margin-bottom:30px}
+.body{font-size:36px;line-height:1.5;color:var(--ink);margin:0;max-width:1400px}
+.foot{font-size:23px;line-height:1.4;color:var(--muted);margin:18px 0 0;max-width:1500px}
+
+/* ---------- Icons ---------- */
+.ic{flex:none;width:60px;height:60px;border-radius:18px;background:var(--light-blue);color:var(--blue);display:inline-flex;align-items:center;justify-content:center}
+.ic svg{width:32px;height:32px}
+svg.i{fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+
+/* ==========================================================================
+   COVER / SECTION / CLOSING (dark)
+   ========================================================================== */
+.cover-bg{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.cover-bg .shape{position:absolute;border-radius:50%}
+.shape.a{width:820px;height:820px;right:-250px;top:-320px;background:radial-gradient(circle at 30% 30%,#ff4a3d,var(--red) 60%,#a30400);animation:drift 22s ease-in-out infinite alternate}
+.shape.b{width:520px;height:520px;right:110px;bottom:-230px;border:3px solid rgba(234,244,255,.18);animation:drift 26s ease-in-out infinite alternate-reverse}
+.shape.c{width:250px;height:250px;right:560px;bottom:110px;background:linear-gradient(140deg,var(--blue),#0c2a52);opacity:.92;animation:drift 18s ease-in-out infinite alternate}
+.cover-body{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;justify-content:center;max-width:1150px}
+.t-cover .kicker{color:#FF6A62}
+.display{font-size:150px;font-weight:800;line-height:1;letter-spacing:-.03em;margin:0;color:#fff}
+.lead{font-size:40px;line-height:1.4;color:#D9E4F5;margin:36px 0 0;max-width:1050px}
+.chips{display:flex;gap:16px;flex-wrap:wrap;margin-top:50px}
+.chips span{border:2px solid rgba(255,255,255,.35);border-radius:999px;padding:12px 26px;font-size:26px;color:#fff;background:rgba(16,27,51,.4)}
+
+.t-section::after{content:"";position:absolute;right:-240px;top:-240px;width:800px;height:800px;border-radius:50%;border:2px solid rgba(234,244,255,.12);box-shadow:inset 0 0 0 130px rgba(23,74,139,.22)}
+.sec-wrap{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;justify-content:center;max-width:1350px}
+.sec-num{font-size:200px;font-weight:800;color:var(--red);line-height:1;margin:0}
+.sec-title{font-size:112px;font-weight:800;color:#fff;margin:6px 0 0;line-height:1.02;letter-spacing:-.02em}
+.sec-sub{font-size:40px;line-height:1.4;color:#C9D6EC;margin:28px 0 0;max-width:1150px}
+.sec-rule{display:block;width:180px;height:8px;background:var(--red);margin-top:46px;border-radius:4px}
+
+.t-closing{display:flex;align-items:center;justify-content:center}
+.closing-wrap{text-align:center;position:relative;z-index:2}
+.closing-wrap .wordmark{justify-content:center;font-size:72px;margin-bottom:56px}
+.closing-wrap h2{font-size:120px;font-weight:800;margin:0;color:#fff;letter-spacing:-.02em}
+.closing-wrap p{font-size:40px;color:#C9D6EC;margin:24px 0 0}
+
+/* ==========================================================================
+   STATS
+   ========================================================================== */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;margin-top:4px}
+.stat{background:#fff;border:1px solid var(--line);border-top:10px solid var(--red);border-radius:26px;padding:48px 36px 44px;box-shadow:0 12px 34px rgba(16,27,51,.07)}
+.stat .num{font-size:88px;font-weight:800;color:var(--navy);line-height:1;letter-spacing:-.03em;white-space:nowrap}
+.stat .lbl{font-size:30px;color:var(--muted);margin-top:18px;line-height:1.35}
+.note{font-size:36px;line-height:1.5;color:var(--ink);margin:44px 0 0;max-width:1450px}
+
+/* ==========================================================================
+   SPLIT
+   ========================================================================== */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:120px;align-items:center;height:100%}
+.split-dense{gap:80px;grid-template-columns:560px 1fr}
+.split-dense .rows{gap:16px}
+.split-dense .row{padding:18px 28px;gap:24px;border-radius:20px}
+.split-dense .row-val{font-size:62px;min-width:160px}
+.split-dense .row-lbl{font-size:26px;line-height:1.3}
+.split-l .head{margin-bottom:34px}
+.rows{display:flex;flex-direction:column;gap:26px}
+.row{display:flex;align-items:center;gap:30px;background:#fff;border:1px solid var(--line);border-left:10px solid var(--blue);border-radius:24px;padding:30px 36px;box-shadow:0 10px 28px rgba(16,27,51,.06)}
+.row .ic{width:76px;height:76px;border-radius:22px}
+.row .ic svg{width:38px;height:38px}
+.row-val{font-size:76px;font-weight:800;color:var(--red);min-width:200px;line-height:1;letter-spacing:-.02em}
+.row-lbl{font-size:32px;color:var(--navy);line-height:1.35;font-weight:600}
+
+/* ==========================================================================
+   CARDS
+   ========================================================================== */
+.cards{display:grid;gap:28px;margin-top:4px}
+.cards.cols-2{grid-template-columns:repeat(2,1fr)}
+.cards.cols-3{grid-template-columns:repeat(3,1fr)}
+.cards.cols-4{grid-template-columns:repeat(4,1fr)}
+.cards.cols-5{grid-template-columns:repeat(5,1fr)}
+.card{position:relative;background:#fff;border:1px solid var(--line);border-radius:24px;padding:28px 36px 26px;box-shadow:0 12px 30px rgba(16,27,51,.06);overflow:hidden}
+.card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:8px;background:var(--blue)}
+.card h3{font-size:33px;line-height:1.2;margin:12px 0 10px;color:var(--navy)}
+.card p{font-size:28px;line-height:1.42;color:var(--muted);margin:0}
+.card .ic{margin-bottom:6px}
+.card-tag{display:inline-block;font-size:22px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--red)}
+.card-num{display:inline-flex;align-items:center;justify-content:center;width:64px;height:64px;border-radius:50%;background:var(--navy);color:#fff;font-size:30px;font-weight:800}
+.cards.compact .card{padding:30px 32px}
+.cards.compact .card h3{font-size:34px;margin:10px 0 0}
+.cards.compact .card::before{background:var(--red)}
+.cards.cols-5 .card{padding:22px 26px 20px}
+.cards.cols-5 .card .ic{width:52px;height:52px;border-radius:15px;margin-bottom:4px}
+.cards.cols-5 .card .ic svg{width:28px;height:28px}
+.cards.cols-5 .card h3{font-size:30px;line-height:1.15;margin:8px 0 8px}
+.cards.cols-5 .card p{font-size:25px;line-height:1.35}
+
+/* Format feature pills for merged format slide */
+.format-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:28px}
+.feat-pill{display:flex;align-items:center;gap:20px;background:#fff;border:1px solid var(--line);border-left:8px solid var(--blue);border-radius:20px;padding:16px 24px;box-shadow:0 8px 22px rgba(16,27,51,.05)}
+.feat-pill .ic{width:56px;height:56px;border-radius:18px;background:var(--light-blue);color:var(--blue);flex:none}
+.feat-pill .ic svg{width:30px;height:30px}
+.feat-lbl{font-size:26px;font-weight:700;color:var(--navy);line-height:1.25}
+
+/* ==========================================================================
+   TASK LISTS (module task types, with priorities and optional scoring panel)
+   ========================================================================== */
+.tasks-wrap{display:flex;gap:44px;align-items:stretch}
+.task-grid{flex:1;min-width:0;display:grid;gap:16px;align-content:start}
+.task-grid.cols-1{grid-template-columns:1fr}
+.task-grid.cols-2{grid-template-columns:1fr 1fr}
+.task{display:flex;align-items:center;gap:20px;background:#fff;border:1px solid var(--line);border-left:8px solid var(--blue);border-radius:18px;padding:16px 26px;box-shadow:0 8px 22px rgba(16,27,51,.05);min-width:0}
+.task-top{display:contents}
+.task-num{order:1;font-size:24px;font-weight:800;color:var(--blue);background:var(--light-blue);border-radius:12px;padding:8px 14px;line-height:1}
+.task-name{order:2;flex:1;min-width:0;font-size:31px;font-weight:700;color:var(--navy);line-height:1.2}
+.pri{order:3;font-size:22px;font-weight:700;border-radius:999px;padding:8px 18px;white-space:nowrap;line-height:1.2}
+.pri-high{background:var(--red);color:#fff}
+.pri-mid{background:var(--blue);color:#fff}
+.pri-low{background:#E4EAF3;color:var(--navy)}
+/* stacked cards (Speaking, Writing) */
+.task-grid.stack .task{flex-direction:column;align-items:flex-start;gap:10px;padding:16px 26px}
+.task-grid.stack .task-top{display:flex;align-items:center;gap:14px}
+.task-grid.stack .task-name{order:2;flex:none}
+.task-grid.big .task{min-height:170px;padding:30px 40px;justify-content:center}
+.task-grid.big .task-name{font-size:50px;line-height:1.1}
+.task-grid.big .task-num{font-size:28px;padding:10px 18px}
+.task-grid.big .pri{font-size:26px;padding:10px 22px}
+.panel{width:440px;flex:none;background:var(--navy);color:#fff;border-radius:26px;padding:42px 44px}
+.panel h3{margin:0 0 22px;font-size:32px;color:#fff;letter-spacing:.02em}
+.panel ul{margin:0;padding:0;list-style:none}
+.panel li{font-size:29px;line-height:1.3;padding:13px 0 13px 36px;border-bottom:1px solid rgba(255,255,255,.14);position:relative}
+.panel li:last-child{border-bottom:none}
+.panel li::before{content:"";position:absolute;left:0;top:50%;width:13px;height:13px;margin-top:-6px;background:var(--red);border-radius:50%}
+
+/* ==========================================================================
+   TABLES
+   ========================================================================== */
+.tbl-wrap{background:#fff;border:1px solid var(--line);border-radius:22px;overflow:hidden;box-shadow:0 12px 30px rgba(16,27,51,.06)}
+.tbl{width:100%;border-collapse:collapse;table-layout:fixed}
+.tbl thead th{background:var(--navy);color:#fff;text-align:left;font-size:20px;letter-spacing:.1em;text-transform:uppercase;padding:14px 26px;font-weight:700}
+.tbl tbody th,.tbl tbody td{font-size:28px;line-height:1.25;padding:12px 26px;border-top:1px solid var(--line);color:var(--ink);text-align:left;vertical-align:middle}
+.tbl tbody th{font-weight:700;color:var(--navy)}
+.tbl tbody tr:nth-child(even) th,.tbl tbody tr:nth-child(even) td{background:var(--light-blue)}
+.tbl thead th:last-child,.tbl tbody td:last-child{text-align:center}
+.tbl-wrap.tbl-narrow{max-width:960px;margin:0 auto}
+.tbl.tbl-center thead th{text-align:center;font-size:24px;letter-spacing:.08em;padding:16px 24px}
+.tbl.tbl-center tbody th,.tbl.tbl-center tbody td{text-align:center;font-size:30px;padding:9px 24px;line-height:1.2}
+.tbl.tbl-center tbody th{font-weight:800;color:var(--red)}
+.tbl.tbl-center tbody td{font-weight:800;color:var(--blue)}
+.tbl.tbl-center tbody tr:nth-child(even) th,.tbl.tbl-center tbody tr:nth-child(even) td{background:var(--light-blue)}
+
+/* ==========================================================================
+   PAIR (two large figures)
+   ========================================================================== */
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:36px;margin-top:4px}
+.pcard{background:#fff;border:1px solid var(--line);border-top:12px solid var(--blue);border-radius:28px;padding:36px 50px;box-shadow:0 12px 30px rgba(16,27,51,.06)}
+.pcard.red{border-top-color:var(--red)}
+.pc-tag{font-size:23px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0}
+.pcard h3{font-size:42px;margin:10px 0 16px;color:var(--navy);line-height:1.15}
+.pc-val{font-size:128px;font-weight:800;color:var(--navy);line-height:1;letter-spacing:-.03em}
+.pc-unit{font-size:34px;color:var(--blue);font-weight:700;margin:6px 0 16px}
+.pc-detail{font-size:32px;color:var(--muted);margin:0;line-height:1.4}
+
+/* Footer strip */
+.strip{display:flex;align-items:center;justify-content:center;gap:34px;margin-top:40px;background:var(--navy);color:#fff;border-radius:20px;padding:26px 40px;font-size:30px;font-weight:600;text-align:center}
+.strip i{display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--red)}
+
+/* ==========================================================================
+   QUOTE / CALLOUT
+   ========================================================================== */
+.quote{font-size:70px;line-height:1.22;font-weight:800;color:var(--navy);border-left:14px solid var(--red);padding:6px 0 6px 50px;margin:50px 0 0;max-width:1450px}
+.mini{display:flex;gap:30px;margin-top:70px}
+.mini-card{display:flex;flex-direction:column;gap:8px;background:#fff;border:1px solid var(--line);border-radius:22px;padding:30px 40px;min-width:420px;box-shadow:0 10px 26px rgba(16,27,51,.06)}
+.mini-v{font-size:56px;font-weight:800;color:var(--blue);line-height:1.1}
+.mini-l{font-size:28px;color:var(--muted)}
+
+/* ==========================================================================
+   LADDER (CEFR)
+   ========================================================================== */
+.ladder{display:flex;align-items:flex-end;gap:26px;height:500px;margin-top:20px}
+.rung-col{flex:1;height:100%;display:flex;align-items:flex-end}
+.rung{width:100%;border-radius:22px 22px 8px 8px;padding:26px 28px;display:flex;flex-direction:column;justify-content:space-between;transform-origin:50% 100%;box-shadow:0 12px 28px rgba(16,27,51,.08)}
+.rung .rng{font-size:28px;font-weight:600;opacity:.95}
+.rung .lvl{font-size:80px;font-weight:800;line-height:1;letter-spacing:-.02em}
+.rung.lo{background:var(--light-blue);color:var(--navy)}
+.rung.mid{background:var(--blue);color:#fff}
+.rung.hi{background:var(--navy);color:#fff}
+.rung.top{background:var(--red);color:#fff}
+.slide.is-active .rung{animation:growY .9s var(--ease) both;animation-delay:var(--d,0ms)}
+
+/* ==========================================================================
+   BARS (module durations)
+   ========================================================================== */
+.bars{display:flex;flex-direction:column;gap:48px;margin-top:6px}
+.bar-row{display:grid;grid-template-columns:500px 1fr 230px;align-items:center;gap:40px}
+.bar-label b{display:block;font-size:36px;color:var(--navy);line-height:1.2}
+.bar-label span{font-size:27px;color:var(--muted)}
+.bar-track{position:relative;height:84px;background:#E4EAF3;border-radius:18px;overflow:hidden}
+.bar-solid,.bar-range{position:absolute;top:0;bottom:0;transform-origin:0 50%}
+.bar-solid{left:0;background:var(--blue)}
+.bar-range{background:var(--red)}
+.slide.is-active .bar-solid{animation:growX .9s var(--ease) both;animation-delay:var(--d,0ms)}
+.slide.is-active .bar-range{animation:growX .9s var(--ease) both;animation-delay:var(--d,0ms)}
+.bar-time{font-size:36px;font-weight:800;color:var(--navy);text-align:right;white-space:nowrap}
+
+/* ==========================================================================
+   DOUBLE-MARKING DOTS
+   ========================================================================== */
+.dot-grid{display:grid;grid-template-columns:repeat(11,110px);gap:30px;justify-content:center;margin-top:34px}
+.dot{width:110px;height:110px;border-radius:50%;background:var(--dot)}
+.dot.hl{background:var(--red)}
+.slide.is-active .dot{animation:pop .55s var(--ease) both;animation-delay:var(--d,0ms)}
+.legend{display:flex;justify-content:center;gap:70px;margin-top:44px;font-size:31px;font-weight:600;color:var(--navy)}
+.sw{display:inline-block;width:26px;height:26px;border-radius:50%;background:var(--dot);margin-right:14px;vertical-align:-4px}
+.sw.hl{background:var(--red)}
+
+/* ==========================================================================
+   ROWS (labelled lines)
+   ========================================================================== */
+.rowlist{display:flex;flex-direction:column;gap:10px;margin-top:0}
+.rowitem{display:grid;grid-template-columns:340px 1fr;gap:34px;align-items:center;background:#fff;border:1px solid var(--line);border-left:10px solid var(--blue);border-radius:20px;padding:16px 32px;box-shadow:0 8px 22px rgba(16,27,51,.05)}
+.rowitem .rtag{font-size:23px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--red);line-height:1.25}
+.rowitem p{margin:0;font-size:31px;line-height:1.35;color:var(--muted)}
+.rowitem p b{color:var(--navy)}
+
+/* ==========================================================================
+   CHECKLIST
+   ========================================================================== */
+.checks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:16px}
+.checks li{display:flex;align-items:center;gap:30px;background:#fff;border:1px solid var(--line);border-radius:22px;padding:18px 34px;font-size:34px;line-height:1.3;color:var(--navy);font-weight:600;box-shadow:0 8px 22px rgba(16,27,51,.05)}
+.chk{flex:none;width:60px;height:60px;border-radius:50%;background:var(--red);color:#fff;display:flex;align-items:center;justify-content:center}
+.chk svg{width:30px;height:30px;stroke-width:3}
+
+/* ==========================================================================
+   STEPS
+   ========================================================================== */
+.steps{list-style:none;padding:0;margin:44px 0 0;display:grid;grid-template-columns:repeat(4,1fr);gap:30px}
+.steps li{position:relative;background:#fff;border:1px solid var(--line);border-radius:26px;padding:66px 36px 40px;box-shadow:0 12px 30px rgba(16,27,51,.06)}
+.step-n{position:absolute;top:-32px;left:36px;width:66px;height:66px;border-radius:50%;background:var(--red);color:#fff;font-size:30px;font-weight:800;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 22px rgba(225,6,0,.3)}
+.steps h3{font-size:36px;line-height:1.2;margin:0 0 16px;color:var(--navy)}
+.steps p{font-size:29px;line-height:1.45;color:var(--muted);margin:0}
+
+/* ==========================================================================
+   TAKEAWAYS
+   ========================================================================== */
+.take-list{display:flex;flex-direction:column;gap:18px;margin-top:0}
+.take{display:flex;gap:34px;align-items:flex-start;background:#fff;border-left:12px solid var(--red);border-radius:22px;padding:22px 42px;box-shadow:0 12px 30px rgba(16,27,51,.06)}
+.take-n{font-size:64px;font-weight:800;color:var(--blue);line-height:1;min-width:64px}
+.take h3{margin:0 0 6px;font-size:35px;line-height:1.2;color:var(--navy)}
+.take p{margin:0;font-size:29px;line-height:1.4;color:var(--muted)}
+
+/* ==========================================================================
+   CONTROLS (bottom bar) and OVERVIEW
+   ========================================================================== */
+.controls{position:fixed;left:0;right:0;bottom:0;height:96px;z-index:40;display:flex;align-items:center;justify-content:center;gap:20px;padding:0 40px 8px;background:linear-gradient(to top,rgba(16,27,51,.94) 40%,rgba(16,27,51,0));transition:opacity .35s ease}
+body.is-fs.idle .controls{opacity:0;pointer-events:none}
+.ctl{width:58px;height:58px;flex:none;border-radius:50%;border:1px solid rgba(255,255,255,.32);background:rgba(16,27,51,.6);color:#fff;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0;transition:background .2s,border-color .2s,opacity .2s}
+.ctl svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.ctl:hover,.ctl:focus-visible{background:var(--red);border-color:var(--red);outline:none}
+.ctl:disabled{opacity:.35;cursor:default;background:rgba(16,27,51,.6);border-color:rgba(255,255,255,.2)}
+.ctl[aria-expanded="true"]{background:var(--blue);border-color:var(--blue)}
+.ctr{color:#fff;font-size:26px;font-weight:700;font-variant-numeric:tabular-nums;min-width:132px;text-align:center;letter-spacing:.02em;text-shadow:0 2px 8px rgba(0,0,0,.4)}
+.prog{width:340px;height:8px;border-radius:8px;background:rgba(255,255,255,.22);overflow:hidden}
+.prog span{display:block;height:100%;background:var(--red);transform-origin:0 50%;transform:scaleX(0);transition:transform .6s var(--ease)}
+
+.overview{position:fixed;inset:0;z-index:50;background:rgba(16,27,51,.97);color:#fff;display:flex;flex-direction:column;padding:44px 64px;overflow:hidden}
+.overview[hidden]{display:none}
+.ov-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.ov-head h2{margin:0;font-size:34px;letter-spacing:.02em}
+.ov-close{font:inherit;font-size:22px;font-weight:700;color:#fff;background:var(--red);border:0;border-radius:999px;padding:14px 30px;cursor:pointer}
+.ov-close:focus-visible{outline:3px solid #fff;outline-offset:3px}
+.ov-body{overflow:auto;padding-right:12px}
+.ov-group{margin-bottom:26px}
+.ov-group h3{margin:0 0 12px;font-size:20px;letter-spacing:.14em;text-transform:uppercase;color:#FF6A62}
+.ov-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.ov-item{font:inherit;font-size:22px;text-align:left;color:#fff;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:14px 20px;cursor:pointer;display:flex;gap:16px;align-items:center}
+.ov-item:hover,.ov-item:focus-visible{background:rgba(225,6,0,.35);border-color:var(--red);outline:none}
+.ov-item[aria-current="true"]{border-color:#fff;background:rgba(255,255,255,.18)}
+.ov-n{font-weight:800;color:#FF6A62;font-variant-numeric:tabular-nums;min-width:36px}
+
+/* ==========================================================================
+   REDUCED MOTION
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce){
+  .slide,.slide.is-active,.slide.is-before,.slide.is-after{transition:opacity .25s linear,visibility 0s!important;transform:none!important}
+  .slide.is-active .reveal,.slide.is-active .dot,.slide.is-active .rung,.slide.is-active .bar-solid,.slide.is-active .bar-range{animation:none!important}
+  .cover-bg .shape{animation:none!important}
+  .prog span{transition:none}
+}
+</style>
+</head>
+<body>
+
+<div id="deck">
+  <main id="stage" aria-label="PTE Academic Orientation presentation"></main>
+</div>
+
+<nav id="controls" class="controls" aria-label="Presentation controls">
+  <button type="button" class="ctl" id="btn-prev" aria-label="Previous slide" title="Previous (Left arrow)">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+  </button>
+  <div class="ctr" id="counter" aria-live="polite">01 / 01</div>
+  <div class="prog" id="progress" role="progressbar" aria-label="Presentation progress" aria-valuemin="1" aria-valuemax="1" aria-valuenow="1"><span id="prog-fill"></span></div>
+  <button type="button" class="ctl" id="btn-next" aria-label="Next slide" title="Next (Right arrow or Space)">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+  </button>
+  <button type="button" class="ctl" id="btn-ov" aria-label="Open slide overview" aria-expanded="false" aria-controls="overview" title="Slide overview (O)">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+  </button>
+  <button type="button" class="ctl" id="btn-fs" aria-label="Enter fullscreen" title="Fullscreen (F)">
+    <svg class="i-exp" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>
+    <svg class="i-cmp" viewBox="0 0 24 24" aria-hidden="true" hidden><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg>
+  </button>
+</nav>
+
+<div id="overview" class="overview" hidden role="dialog" aria-modal="true" aria-labelledby="ov-title">
+  <div class="ov-head">
+    <h2 id="ov-title">Slide overview</h2>
+    <button type="button" class="ov-close" id="ov-close">Close (Esc)</button>
+  </div>
+  <div class="ov-body" id="ov-body"></div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* =========================================================================
+     1. EDITABLE CONFIGURATION
+     Update this section for future PTE orientation batches. Nothing else in
+     the file needs to change for ordinary content updates.
+
+     Slide types and the fields they use:
+       cover     kicker, title, subtitle, chips[]
+       section   number, title, subtitle                      (dark divider)
+       closing   title, subtitle                              (dark end slide)
+       stats     title, subtitle?, stats[{value,label}], note?, footnote?
+       split     title, subtitle?, text?, rows[{value?|icon?, label}], footnote?
+       cards     title, subtitle?, cols (2-5), compact?, numbered?,
+                 items[{icon?, tag?, title, text?}], footer[]?, footnote?
+       rows      title, subtitle?, items[{tag, title?, text}], footnote?
+       checklist title, subtitle?, items[string]
+       steps     title, subtitle?, items[{title, text}]
+       takeaway  title, subtitle?, items[{title, text}]
+       quote     title, subtitle?, quote, mini[{value,label}]
+       ladder    title, subtitle?, levels[{range, level, tone: lo|mid|hi|top}]
+       bars      title, subtitle?, max, bars[{label, detail, min, max, time}], footnote?
+       tasks     title, subtitle?, cols (1-2), stack?, big?,
+                 tasks[{name, priority?, level: high|mid|low}], panel?{title, items[]}
+       table     title, subtitle?, headers[], widths[] (percent), rows[][], footnote?
+       pair      title, subtitle?, cards[{tag, title, value, unit, detail, accent?}], footer[]?
+       dots      title, subtitle?, text, total, highlight
+       Every slide also has group (used for the section label and the overview).
+     ========================================================================= */
+  const CONFIG = {
+    brand: {
+      name: 'YES ACADEMY',
+      // Optional official logo. Put a file path or URL here, e.g. 'yes-academy-logo.png'.
+      // Leave empty to show the text wordmark instead.
+      logoUrl: '',
+      runLabel: 'PTE Academic Orientation'
+    },
+    presentationTitle: 'PTE Academic Orientation',
+
+    theme: {
+      'red': '#E10600',
+      'blue': '#174A8B',
+      'light-blue': '#EAF4FF',
+      'navy': '#101B33',
+      'neutral': '#F6F8FC',
+      'white': '#FFFFFF'
+    },
+
+    slides: [
+      /* ---------------------------- START ---------------------------- */
+      { type: 'cover', group: 'Start', title: 'PTE Academic Orientation',
+        kicker: 'Orientation Presentation',
+        subtitle: 'Pearson Test of English (PTE) Academic: a complete guide to format, timing and high-scoring strategies.',
+        chips: ['Speaking · Writing · Reading · Listening', 'Scored on the 10–90 Global Scale of English'] },
+
+      /* ------------------------ 01 GENERAL OVERVIEW ------------------------ */
+      { type: 'section', group: 'General Overview', number: '01', title: 'General Overview',
+        subtitle: 'PTE Academic at a glance, the score scale and how the session is structured.' },
+
+      { type: 'stats', group: 'General Overview', title: 'PTE Academic at a Glance',
+        stats: [
+          { value: '4,000+', label: 'institutions worldwide accept PTE' },
+          { value: '70+', label: 'countries' },
+          { value: '100%', label: 'computer-based, one uninterrupted session' },
+          { value: '10–90', label: 'score scale (Global Scale of English)' }
+        ],
+        note: 'Universities and colleges use PTE for admission, including leading names such as Oxford University, Harvard Business School and Yale.',
+        footnote: 'Source: Pearson PTE, “Who accepts PTE?” (pearsonpte.com). Figures are updated by Pearson from time to time.' },
+
+      { type: 'split', group: 'General Overview', title: 'Accepted for Visas & Admission',
+        text: 'PTE is also accepted for visa applications by the Australian, Canadian, New Zealand and UK governments.',
+        rows: [
+          { value: '100%', label: 'Universities in Australia, New Zealand, USA and Canada report acceptance' },
+          { value: '100%', label: 'Universities in Sweden, Denmark, Finland and Norway report acceptance' },
+          { value: '100%', label: 'Universities in Malaysia report acceptance' },
+          { value: '99%', label: 'Universities and colleges in the UK report acceptance' }
+        ],
+        footnote: 'Source: Pearson PTE, “Who accepts PTE?” Figures are updated by Pearson from time to time.' },
+
+      { type: 'cards', group: 'General Overview', title: '4 Modules In 1 Seating', cols: 4,
+        subtitle: 'In a single session you are tested on Speaking, Writing, Reading and Listening.',
+        items: [
+          { icon: 'mic', title: 'Speaking', text: 'You speak into a microphone to answer.' },
+          { icon: 'pen', title: 'Writing', text: 'Every written response is typed on the computer.' },
+          { icon: 'book', title: 'Reading', text: 'Runs on one shared timer across its task types.' },
+          { icon: 'headphones', title: 'Listening', text: 'Runs on one shared timer across its task types.' }
+        ],
+        footer: ['100% computer-based', 'Results typically within 2 business days'] },
+
+      { type: 'ladder', group: 'General Overview', title: 'PTE Score to CEFR Level',
+        subtitle: 'How PTE scores on the 10–90 scale map to CEFR levels.',
+        levels: [
+          { range: '10–29', level: 'A1', tone: 'lo' },
+          { range: '30–42', level: 'A2', tone: 'lo' },
+          { range: '43–58', level: 'B1', tone: 'lo' },
+          { range: '59–75', level: 'B2', tone: 'mid' },
+          { range: '76–84', level: 'C1', tone: 'hi' },
+          { range: '85–90', level: 'C2', tone: 'top' }
+        ] },
+
+      { type: 'table', group: 'General Overview', title: 'Comparison of IELTS Score with PTE',
+        subtitle: 'Score concordance between PTE Academic and IELTS on the 9.0 band scale.',
+        headers: ['PTE Academic Score', 'IELTS Score'], widths: [50, 50], narrow: true, center: true,
+        rows: [
+          ['24', '4.5'],
+          ['31', '5.0'],
+          ['39', '5.5'],
+          ['47', '6.0'],
+          ['55', '6.5'],
+          ['63', '7.0'],
+          ['71', '7.5'],
+          ['79', '8.0'],
+          ['86', '8.5'],
+          ['90', '9.0']
+        ] },
+
+      { type: 'bars', group: 'General Overview', title: 'General Structure', max: 90,
+        subtitle: 'A single, uninterrupted, computer-based session of roughly 2 hours (about 2h15m including instructions).',
+        bars: [
+          { label: 'Speaking & Writing', detail: '9 task types (7 speaking + 2 writing)', min: 76, max: 84, time: '76–84 min' },
+          { label: 'Reading', detail: '5 task types · shared timer', min: 22, max: 30, time: '22–30 min' },
+          { label: 'Listening', detail: '8 task types · shared timer', min: 31, max: 39, time: '31–39 min' }
+        ],
+        footnote: 'Blue marks the minimum time for each module. Red marks the extra time up to the maximum.' },
+
+      /* ----------------------- 02 MODULES & SCORING ----------------------- */
+      { type: 'section', group: 'Modules & Scoring', number: '02', title: 'Modules, Parts & Scoring',
+        subtitle: 'The task types in each module, their priority levels and how Speaking and Writing are scored.' },
+
+      { type: 'tasks', group: 'Modules & Scoring', title: 'Speaking: 7 Task Types', cols: 2, stack: true,
+        tasks: [
+          { name: 'Read Aloud', priority: 'Moderate priority', level: 'mid' },
+          { name: 'Repeat Sentence', priority: 'Moderate-higher priority', level: 'mid' },
+          { name: 'Describe Image', priority: 'Higher priority', level: 'high' },
+          { name: 'Retell Lecture', priority: 'Moderate priority', level: 'mid' },
+          { name: 'Answer Short Question', priority: 'Lower priority', level: 'low' },
+          { name: 'Summarize Group Discussion', priority: 'Higher priority', level: 'high' },
+          { name: 'Respond to a Situation', priority: 'Moderate priority', level: 'mid' }
+        ],
+        panel: { title: 'Scoring Criteria', items: ['Content', 'Pronunciation', 'Oral Fluency'] } },
+
+      { type: 'tasks', group: 'Modules & Scoring', title: 'Writing: 2 Task Types', cols: 2, stack: true, big: true,
+        tasks: [
+          { name: 'Summarize Written Text', priority: 'High priority', level: 'high' },
+          { name: 'Write Essay', priority: 'High priority', level: 'high' }
+        ],
+        panel: { title: 'Scoring Criteria', items: [
+          'Content (Relevancy)',
+          'Development, Structure & Coherence',
+          'Length (200–300 words)',
+          'General Linguistic Range (Spelling, Grammar)'
+        ] } },
+
+      { type: 'tasks', group: 'Modules & Scoring', title: 'Reading: 5 Task Types', cols: 1,
+        tasks: [
+          { name: 'Fill in the Blanks – Dropdown', priority: 'Higher priority', level: 'high' },
+          { name: 'Multiple Choice: Multiple Answers' },
+          { name: 'Re-order Paragraph', priority: 'Moderate priority', level: 'mid' },
+          { name: 'Fill in the Blanks – Drag and Drop', priority: 'Higher priority', level: 'high' },
+          { name: 'Multiple Choice: Single Answer' }
+        ] },
+
+      { type: 'tasks', group: 'Modules & Scoring', title: 'Listening: 8 Task Types', cols: 2,
+        tasks: [
+          { name: 'Summarize Spoken Text', priority: 'Higher priority', level: 'high' },
+          { name: 'Multiple Choice: Multiple Answers' },
+          { name: 'Fill in the Blanks', priority: 'Higher priority', level: 'high' },
+          { name: 'Highlight Correct Summary' },
+          { name: 'Multiple Choice: Single Answer' },
+          { name: 'Select Missing Word' },
+          { name: 'Highlight Incorrect Words', priority: 'Higher priority', level: 'high' },
+          { name: 'Write From Dictation', priority: 'Higher priority', level: 'high' }
+        ] },
+
+      /* ---------------------------- 03 TIMING ---------------------------- */
+      { type: 'section', group: 'Timing & Items', number: '03', title: 'Timing & Items per Test',
+        subtitle: 'How long each task takes and how many items to expect.' },
+
+      { type: 'table', group: 'Timing & Items', title: 'Speaking: Timing & Items per Test',
+        headers: ['Task', 'Timing', 'Items per test'], widths: [32, 50, 18],
+        rows: [
+          ['Read Aloud', '30–40s prep + 30–40s execution', '6–7'],
+          ['Repeat Sentence', '3–9s audio + 15s execution', '10–12'],
+          ['Describe Image', '25s prep + 40s execution', '6–7'],
+          ['Retell Lecture', 'Up to 90s audio + 10s prep + 40s execution', '2–3'],
+          ['Answer Short Question', '3–9s audio + 10s execution', '5–6'],
+          ['Respond to a Situation', '10s prep + 40s execution', '2–3'],
+          ['Summarize Group Discussion', 'Up to 3 min audio (3 speakers) + 10s prep + 120s execution', '2–3']
+        ] },
+
+      { type: 'pair', group: 'Timing & Items', title: 'Writing: Timing',
+        cards: [
+          { tag: 'Writing task', title: 'Summarize Written Text', value: '10 min', unit: 'per item', detail: '2 items per test' },
+          { tag: 'Writing task', title: 'Write Essay', value: '20 min', unit: 'per item', detail: '1 item per test', accent: 'red' }
+        ] },
+
+      { type: 'table', group: 'Timing & Items', title: 'Reading: 22–30 Minutes',
+        headers: ['Task', 'Skills scored', 'Items per test'], widths: [40, 40, 20],
+        rows: [
+          ['Fill in the Blanks: Dropdown', 'Reading only', '5–6'],
+          ['Multiple Choice: Multiple Answers', 'Reading only (negative marking)', '2–3'],
+          ['Re-order Paragraph', 'Reading only', '2–3'],
+          ['Fill in the Blanks: Drag and Drop', 'Reading only', '4–5'],
+          ['Multiple Choice: Single Answer', 'Reading only', '2–3']
+        ],
+        footnote: 'Shared reading timer across all five task types.' },
+
+      { type: 'table', group: 'Timing & Items', title: 'Listening: 31–39 Minutes',
+        headers: ['Task', 'Skills scored', 'Items per test'], widths: [40, 40, 20],
+        rows: [
+          ['Summarize Spoken Text', 'Listening + Writing', '1'],
+          ['Multiple Choice: Multiple Answers', 'Listening only (negative marking)', '2–3'],
+          ['Fill in the Blanks', 'Listening only', '2–3'],
+          ['Highlight Correct Summary', 'Listening + Reading', '2–3'],
+          ['Multiple Choice: Single Answer', 'Listening only', '2–3'],
+          ['Select Missing Word', 'Listening only', '2–3'],
+          ['Highlight Incorrect Words', 'Listening + Reading (negative marking)', '2–3'],
+          ['Write From Dictation', 'Listening + Writing', '3–4']
+        ],
+        footnote: 'Shared listening timer across all eight task types. Item counts vary slightly between test versions: always check your Pearson test-day summary for the exact count.' },
+
+      { type: 'pair', group: 'Timing & Items', title: 'Listening Time Breakdown',
+        cards: [
+          { tag: 'Independent time', title: 'Summarize Spoken Text', value: '10 min', unit: 'independent time', detail: 'This task has 10 minutes to itself.' },
+          { tag: 'Shared time', title: 'All other listening tasks', value: '30 min', unit: 'shared time', detail: 'The other listening tasks share the remaining 30 minutes.', accent: 'red' }
+        ],
+        footer: ['10 min + 30 min = 40 min for the entire listening module'] },
+
+      /* -------------------------- 04 KEY FACTS -------------------------- */
+      { type: 'section', group: 'Key Facts & Strategy', number: '04', title: 'Key Facts & Strategy',
+        subtitle: 'Marking, grammar, typing and the computer-based format.' },
+
+      { type: 'dots', group: 'Key Facts & Strategy', title: 'Double Marking: 7 of 22 Types',
+        text: 'Double marking (human and AI scoring for content) is used for 7 of the 22 PTE Academic question types. All other question types are scored by AI alone.',
+        total: 22, highlight: 7 },
+
+      { type: 'cards', group: 'Key Facts & Strategy', title: 'The 7 Double-Marked Question Types', cols: 4, compact: true,
+        items: [
+          { tag: 'Speaking', title: 'Describe Image' },
+          { tag: 'Speaking', title: 'Retell Lecture' },
+          { tag: 'Speaking', title: 'Summarize Group Discussion' },
+          { tag: 'Speaking', title: 'Respond to a Situation' },
+          { tag: 'Writing', title: 'Summarize Written Text' },
+          { tag: 'Writing', title: 'Write Essay' },
+          { tag: 'Listening', title: 'Summarize Spoken Text' }
+        ] },
+
+      { type: 'rows', group: 'Key Facts & Strategy', title: 'Why Grammar Is Important',
+        subtitle: 'Not a separate section of the test, but it affects your score across several modules.',
+        items: [
+          { tag: 'Writing', text: 'Spelling and grammar are scored in both writing tasks.' },
+          { tag: 'Summarize Spoken Text', text: 'Your written summary is also assessed on grammar and spelling.' },
+          { tag: 'Reading', text: 'Fill in the Blanks rely on verb tense, number, word type and collocation.' },
+          { tag: 'Listening', text: 'Fill in the Blanks and Write From Dictation need grammatically correct sentences with correct word order.' },
+          { tag: 'Summarize Written Text', text: 'The answer must be one grammatically complete sentence with one full stop.' }
+        ] },
+
+      { type: 'checklist', group: 'Key Facts & Strategy', title: 'Grammar Points to Revise',
+        items: [
+          'Verb tenses and subject–verb agreement',
+          'Articles (a / an / the) and prepositions',
+          'Singular and plural nouns',
+          'Sentence structure, linking words (which, that, while, because) and punctuation',
+          'Consistent spelling: pick either British or American spelling and stick to it'
+        ] },
+
+      { type: 'rows', group: 'Key Facts & Strategy', title: 'Tasks That Depend on Typing',
+        subtitle: 'Every written response is typed on the computer. There is no handwriting.',
+        items: [
+          { tag: 'Writing', title: 'Summarize Written Text:', text: '10 minutes for one sentence of up to 75 words.' },
+          { tag: 'Writing', title: 'Write Essay:', text: '20 minutes for 200–300 words.' },
+          { tag: 'Listening + Writing', title: 'Summarize Spoken Text:', text: '50–70 words, typed while managing the 10-minute limit.' },
+          { tag: 'Listening', title: 'Fill in the Blanks:', text: 'Type the exact word you hear, correctly spelled.' },
+          { tag: 'Listening + Writing', title: 'Write From Dictation:', text: 'Type sentences in chunks as you hear them.' }
+        ] },
+
+      { type: 'takeaway', group: 'Key Facts & Strategy', title: 'Why Typing Matters',
+        items: [
+          { title: 'Time pressure', text: 'If typing is slow, you may run out of time before you can proofread, where many grammar and spelling errors get caught.' },
+          { title: 'Spelling accuracy', text: 'A misspelled word is marked wrong, especially in Fill in the Blanks and Write From Dictation.' },
+          { title: 'Word limits', text: 'Your essay must stay between 200 and 300 words, so you need to type and check length quickly.' }
+        ] },
+
+      { type: 'steps', group: 'Key Facts & Strategy', title: 'How to Prepare to Type',
+        items: [
+          { title: 'Touch typing', text: 'Practice typing without looking at the keys, using a standard keyboard layout.' },
+          { title: 'Timed practice', text: 'Practice the essay and summary tasks on a computer, not on paper.' },
+          { title: 'Type while listening', text: 'Write From Dictation and Summarize Spoken Text require both at once.' },
+          { title: 'Leave time to proofread', text: 'Always leave time at the end to check your work.' }
+        ] },
+
+      { type: 'cards', group: 'Key Facts & Strategy', title: 'Benefits of the Format', cols: 5,
+        features: [
+          { icon: 'mic', label: 'You speak into a microphone' },
+          { icon: 'keyboard', label: 'You type your answers' },
+          { icon: 'user-off', label: 'No face-to-face interview with an examiner' }
+        ],
+        items: [
+          { icon: 'target', title: 'Consistent marking', text: 'Answers are scored with the same criteria, not an examiner’s mood or impression.' },
+          { icon: 'mic', title: 'No examiner nerves', text: 'You speak to a microphone, which many test takers find less stressful.' },
+          { icon: 'zap', title: 'Fast results', text: 'Scores are usually available within a couple of days, which helps with visa or admission deadlines.' },
+          { icon: 'calendar', title: 'Flexible booking', text: 'Test dates and times are offered across many test centers throughout the year.' },
+          { icon: 'clock', title: 'One session', text: 'All four skills are tested together, so there is no separate speaking appointment.' }
+        ] },
+
+      /* ------------------------------ END ------------------------------ */
+      { type: 'cards', group: 'End', title: 'Key Takeaways', cols: 2, numbered: true,
+        items: [
+          { title: 'Four skills, one session', text: 'Speaking, Writing, Reading and Listening are taken together in roughly 2 hours and scored on the 10–90 scale.' },
+          { title: 'Focus on double-marked tasks', text: 'These content-heavy tasks mostly carry High or Higher priority, so they deserve extra practice time.' },
+          { title: 'Grammar and typing are scored', text: 'Grammar is scored across several modules, and slow or inaccurate typing costs you time and marks.' },
+          { title: 'Practice on a computer', text: 'Get comfortable with the layout, timers, microphone and headset before test day.' }
+        ] },
+
+      { type: 'closing', group: 'End', title: 'Thank You', subtitle: 'PTE Academic Orientation' }
+    ]
+  };
+
+  /* =========================================================================
+     2. ICONS (inline SVG, no external resources)
+     ========================================================================= */
+  const ICONS = {
+    'mic': '<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3M9 21h6"/>',
+    'pen': '<path d="M4 20h4L19 9l-4-4L4 16v4z"/><path d="M13.5 6.5l4 4"/>',
+    'book': '<path d="M3 5a2 2 0 0 1 2-2h5v17H5a2 2 0 0 0-2 2z"/><path d="M21 5a2 2 0 0 0-2-2h-5v17h5a2 2 0 0 1 2 2z"/>',
+    'headphones': '<path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/>',
+    'target': '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>',
+    'zap': '<path d="M13 2L4 14h7l-1 8 9-12h-7z"/>',
+    'calendar': '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+    'clock': '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+    'keyboard': '<rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M6 14h12"/>',
+    'user-off': '<circle cx="10" cy="8" r="4"/><path d="M3 21a7 7 0 0 1 11-5.8M16 16l6 6M22 16l-6 6"/>',
+    'check': '<path d="M5 12.5l4.5 4.5L19 7.5"/>'
+  };
+  function icon(name) {
+    return '<svg class="i" viewBox="0 0 24 24" aria-hidden="true">' + (ICONS[name] || '') + '</svg>';
+  }
+
+  /* =========================================================================
+     3. SLIDE RENDERERS (content comes from CONFIG only)
+     ========================================================================= */
+  const pad = n => String(n).padStart(2, '0');
+  const isDark = s => s.type === 'cover' || s.type === 'section' || s.type === 'closing';
+
+  function brand(dark) {
+    const logo = CONFIG.brand.logoUrl
+      ? '<img src="' + CONFIG.brand.logoUrl + '" alt="" data-logo>'
+      : '';
+    return '<div class="brand' + (dark ? ' on-dark' : '') + '" role="img" aria-label="' + CONFIG.brand.name + '">' +
+      logo +
+      '<div class="wordmark" aria-hidden="true"><span class="w-yes">YES</span><span class="w-acad">ACADEMY</span></div>' +
+      '</div>';
+  }
+
+  function head(s) {
+    const kicker = s.kicker !== undefined ? s.kicker : s.group;
+    return '<header class="head">' +
+      (kicker ? '<p class="kicker reveal" style="--d:0ms">' + kicker + '</p>' : '') +
+      '<h2 class="title reveal" style="--d:90ms">' + s.title + '</h2>' +
+      (s.subtitle ? '<p class="sub reveal" style="--d:200ms">' + s.subtitle + '</p>' : '') +
+      '</header>';
+  }
+  function foot(s, d) {
+    return s.footnote ? '<p class="foot reveal" style="--d:' + (d || 1000) + 'ms">' + s.footnote + '</p>' : '';
+  }
+  function strip(s, d) {
+    if (!s.footer) return '';
+    return '<div class="strip reveal" style="--d:' + (d || 900) + 'ms">' +
+      s.footer.map(x => '<span>' + x + '</span>').join('<i aria-hidden="true"></i>') + '</div>';
+  }
+
+  const T = {
+    cover(s) {
+      return '<div class="cover-bg" aria-hidden="true"><span class="shape a"></span><span class="shape b"></span><span class="shape c"></span></div>' +
+        '<div class="cover-body">' +
+        '<p class="kicker reveal" style="--d:250ms">' + s.kicker + '</p>' +
+        '<h1 class="display reveal" style="--d:380ms">' + s.title + '</h1>' +
+        '<p class="lead reveal" style="--d:560ms">' + s.subtitle + '</p>' +
+        '<div class="chips reveal" style="--d:760ms">' + s.chips.map(c => '<span>' + c + '</span>').join('') + '</div>' +
+        '</div>';
+    },
+
+    section(s) {
+      return '<div class="sec-wrap">' +
+        '<p class="sec-num reveal" style="--d:0ms">' + s.number + '</p>' +
+        '<h2 class="sec-title reveal" style="--d:160ms">' + s.title + '</h2>' +
+        '<p class="sec-sub reveal" style="--d:300ms">' + s.subtitle + '</p>' +
+        '<span class="sec-rule reveal" style="--d:420ms"></span>' +
+        '</div>';
+    },
+
+    closing(s) {
+      return '<div class="closing-wrap">' +
+        '<div class="wordmark reveal" style="--d:0ms"><span class="w-yes">YES</span><span class="w-acad">ACADEMY</span></div>' +
+        '<h2 class="reveal" style="--d:200ms">' + s.title + '</h2>' +
+        '<p class="reveal" style="--d:360ms">' + s.subtitle + '</p>' +
+        '</div>';
+    },
+
+    stats(s) {
+      return head(s) +
+        '<div class="stats">' + s.stats.map((x, i) =>
+          '<div class="stat reveal" style="--d:' + (300 + i * 120) + 'ms"><div class="num">' + x.value + '</div><div class="lbl">' + x.label + '</div></div>'
+        ).join('') + '</div>' +
+        (s.note ? '<p class="note reveal" style="--d:850ms">' + s.note + '</p>' : '') +
+        foot(s, 1000);
+    },
+
+    split(s) {
+      const dense = s.rows && s.rows.length >= 4;
+      return '<div class="split' + (dense ? ' split-dense' : '') + '">' +
+        '<div class="split-l">' + head(s) +
+        (s.text ? '<p class="body reveal" style="--d:300ms">' + s.text + '</p>' : '') +
+        foot(s, 700) +
+        '</div>' +
+        '<div class="rows">' + s.rows.map((r, i) =>
+          '<div class="row reveal" style="--d:' + (350 + i * 130) + 'ms">' +
+          (r.icon ? '<span class="ic">' + icon(r.icon) + '</span>' : '') +
+          (r.value ? '<div class="row-val">' + r.value + '</div>' : '') +
+          '<div class="row-lbl">' + r.label + '</div></div>'
+        ).join('') + '</div>' +
+        '</div>';
+    },
+
+    cards(s) {
+      const feats = s.features ? '<div class="format-strip reveal" style="--d:220ms">' +
+        s.features.map(f =>
+          '<div class="feat-pill"><span class="ic">' + icon(f.icon) + '</span><span class="feat-lbl">' + f.label + '</span></div>'
+        ).join('') + '</div>' : '';
+      return head(s) +
+        feats +
+        '<div class="cards cols-' + (s.cols || 3) + (s.compact ? ' compact' : '') + '">' +
+        s.items.map((c, i) => {
+          const badge = s.numbered
+            ? '<span class="card-num">' + pad(i + 1) + '</span>'
+            : (c.icon ? '<span class="ic">' + icon(c.icon) + '</span>' : '');
+          return '<article class="card reveal" style="--d:' + (250 + i * 90) + 'ms">' +
+            badge +
+            (c.tag ? '<span class="card-tag">' + c.tag + '</span>' : '') +
+            '<h3>' + c.title + '</h3>' +
+            (c.text ? '<p>' + c.text + '</p>' : '') +
+            '</article>';
+        }).join('') + '</div>' +
+        strip(s) + foot(s);
+    },
+
+    rows(s) {
+      return head(s) +
+        '<div class="rowlist">' + s.items.map((r, i) =>
+          '<div class="rowitem reveal" style="--d:' + (250 + i * 90) + 'ms">' +
+          '<div class="rtag">' + r.tag + '</div>' +
+          '<p>' + (r.title ? '<b>' + r.title + '</b> ' : '') + r.text + '</p>' +
+          '</div>'
+        ).join('') + '</div>' + foot(s);
+    },
+
+    checklist(s) {
+      return head(s) +
+        '<ul class="checks">' + s.items.map((t, i) =>
+          '<li class="reveal" style="--d:' + (250 + i * 110) + 'ms"><span class="chk">' +
+          '<svg class="i" viewBox="0 0 24 24" aria-hidden="true">' + ICONS.check + '</svg></span><span>' + t + '</span></li>'
+        ).join('') + '</ul>';
+    },
+
+    steps(s) {
+      return head(s) +
+        '<ol class="steps">' + s.items.map((t, i) =>
+          '<li class="reveal" style="--d:' + (300 + i * 140) + 'ms"><span class="step-n">' + (i + 1) + '</span>' +
+          '<h3>' + t.title + '</h3><p>' + t.text + '</p></li>'
+        ).join('') + '</ol>';
+    },
+
+    takeaway(s) {
+      return head(s) +
+        '<div class="take-list">' + s.items.map((t, i) =>
+          '<div class="take reveal" style="--d:' + (300 + i * 150) + 'ms"><span class="take-n">' + (i + 1) + '</span>' +
+          '<div><h3>' + t.title + '</h3><p>' + t.text + '</p></div></div>'
+        ).join('') + '</div>' + foot(s);
+    },
+
+    quote(s) {
+      return head(s) +
+        '<blockquote class="quote reveal" style="--d:300ms">' + s.quote + '</blockquote>' +
+        '<div class="mini">' + s.mini.map((m, i) =>
+          '<div class="mini-card reveal" style="--d:' + (550 + i * 130) + 'ms"><span class="mini-v">' + m.value + '</span><span class="mini-l">' + m.label + '</span></div>'
+        ).join('') + '</div>';
+    },
+
+    ladder(s) {
+      return head(s) +
+        '<div class="ladder" role="list" aria-label="PTE score to CEFR level">' + s.levels.map((l, i) =>
+          '<div class="rung-col" role="listitem"><div class="rung ' + l.tone + '" style="--d:' + (300 + i * 140) + 'ms;height:' + (170 + i * 56) + 'px">' +
+          '<span class="rng">' + l.range + '</span><span class="lvl">' + l.level + '</span></div></div>'
+        ).join('') + '</div>';
+    },
+
+    bars(s) {
+      return head(s) +
+        '<div class="bars">' + s.bars.map((b, i) => {
+          const left = (b.min / s.max) * 100;
+          const solid = left;
+          const range = ((b.max - b.min) / s.max) * 100;
+          return '<div class="bar-row reveal" style="--d:' + (300 + i * 160) + 'ms">' +
+            '<div class="bar-label"><b>' + b.label + '</b><span>' + b.detail + '</span></div>' +
+            '<div class="bar-track" aria-hidden="true">' +
+            '<span class="bar-solid" style="width:' + solid + '%;--d:' + (500 + i * 160) + 'ms"></span>' +
+            '<span class="bar-range" style="left:' + left + '%;width:' + range + '%;--d:' + (650 + i * 160) + 'ms"></span>' +
+            '</div>' +
+            '<div class="bar-time">' + b.time + '</div></div>';
+        }).join('') + '</div>' + foot(s, 1000);
+    },
+
+    tasks(s) {
+      const cols = s.cols || 2;
+      const cls = 'task-grid cols-' + cols + (s.stack ? ' stack' : '') + (s.big ? ' big' : '');
+      const items = '<div class="' + cls + '">' + s.tasks.map((t, i) =>
+        '<div class="task reveal" style="--d:' + (250 + i * 80) + 'ms">' +
+        '<div class="task-top"><span class="task-num">' + pad(i + 1) + '</span>' +
+        (t.priority ? '<span class="pri pri-' + t.level + '">' + t.priority + '</span>' : '') +
+        '</div>' +
+        '<span class="task-name">' + t.name + '</span></div>'
+      ).join('') + '</div>';
+      const panel = s.panel
+        ? '<aside class="panel reveal" style="--d:500ms" aria-label="' + s.panel.title + '"><h3>' + s.panel.title + '</h3><ul>' +
+          s.panel.items.map(x => '<li>' + x + '</li>').join('') + '</ul></aside>'
+        : '';
+      return head(s) + '<div class="tasks-wrap">' + items + panel + '</div>' + foot(s);
+    },
+
+    table(s) {
+      const cols = s.widths.map(w => '<col style="width:' + w + '%">').join('');
+      const body = s.rows.map(r =>
+        '<tr>' + r.map((c, j) => j === 0 ? '<th scope="row">' + c + '</th>' : '<td>' + c + '</td>').join('') + '</tr>'
+      ).join('');
+      const wrapCls = 'tbl-wrap reveal' + (s.narrow ? ' tbl-narrow' : '');
+      const tblCls = 'tbl' + (s.center ? ' tbl-center' : '');
+      return head(s) +
+        '<div class="' + wrapCls + '" style="--d:250ms"><table class="' + tblCls + '">' +
+        '<colgroup>' + cols + '</colgroup>' +
+        '<thead><tr>' + s.headers.map(h => '<th scope="col">' + h + '</th>').join('') + '</tr></thead>' +
+        '<tbody>' + body + '</tbody></table></div>' + foot(s);
+    },
+
+    pair(s) {
+      return head(s) +
+        '<div class="pair">' + s.cards.map((c, i) =>
+          '<div class="pcard reveal' + (c.accent === 'red' ? ' red' : '') + '" style="--d:' + (300 + i * 160) + 'ms">' +
+          '<p class="pc-tag">' + c.tag + '</p><h3>' + c.title + '</h3>' +
+          '<div class="pc-val">' + c.value + '</div><p class="pc-unit">' + c.unit + '</p>' +
+          '<p class="pc-detail">' + c.detail + '</p></div>'
+        ).join('') + '</div>' + strip(s, 800);
+    },
+
+    dots(s) {
+      const dots = Array.from({ length: s.total }, (_, i) =>
+        '<span class="dot' + (i < s.highlight ? ' hl' : '') + '" style="--d:' + (450 + i * 45) + 'ms"></span>'
+      ).join('');
+      return head(s) +
+        '<p class="body reveal" style="--d:280ms">' + s.text + '</p>' +
+        '<div class="dot-grid" role="img" aria-label="' + s.highlight + ' of ' + s.total + ' question types are double marked">' + dots + '</div>' +
+        '<div class="legend reveal" style="--d:1250ms">' +
+        '<span><i class="sw hl"></i>Double marked (human + AI): ' + s.highlight + '</span>' +
+        '<span><i class="sw"></i>AI only: ' + (s.total - s.highlight) + '</span></div>';
+    }
+  };
+
+  /* =========================================================================
+     4. BUILD DECK
+     ========================================================================= */
+  const stage = document.getElementById('stage');
+  const total = CONFIG.slides.length;
+
+  CONFIG.slides.forEach((s, i) => {
+    const dark = isDark(s);
+    const sl = document.createElement('section');
+    sl.className = 'slide t-' + s.type + (dark ? ' dark' : '') + (s.type === 'section' ? ' is-section' : '');
+    sl.setAttribute('aria-roledescription', 'slide');
+    sl.setAttribute('aria-label', 'Slide ' + (i + 1) + ' of ' + total + ': ' + s.title);
+    const run = dark ? '' : '<div class="runhead" aria-hidden="true">' + CONFIG.brand.runLabel + '</div>';
+    const br = s.type === 'closing' ? '' : brand(dark);
+    sl.innerHTML = run + br + T[s.type](s);
+    stage.appendChild(sl);
+  });
+
+  const slides = Array.from(stage.querySelectorAll('.slide'));
+  const deck = document.getElementById('deck');
+  const counter = document.getElementById('counter');
+  const progress = document.getElementById('progress');
+  const progFill = document.getElementById('prog-fill');
+  const btnPrev = document.getElementById('btn-prev');
+  const btnNext = document.getElementById('btn-next');
+  const btnOv = document.getElementById('btn-ov');
+  const btnFs = document.getElementById('btn-fs');
+  const ov = document.getElementById('overview');
+  const ovBody = document.getElementById('ov-body');
+  const ovClose = document.getElementById('ov-close');
+
+  progress.setAttribute('aria-valuemax', String(total));
+
+  /* Logo: show the image only once it loads successfully; otherwise keep the wordmark */
+  document.querySelectorAll('img[data-logo]').forEach(img => {
+    const parent = img.parentElement;
+    img.addEventListener('load', () => parent.classList.add('has-logo'));
+    img.addEventListener('error', () => parent.classList.remove('has-logo'));
+    if (img.complete && img.naturalWidth > 0) parent.classList.add('has-logo');
+  });
+
+  document.title = CONFIG.brand.name + ' · ' + CONFIG.presentationTitle;
+  Object.entries(CONFIG.theme).forEach(([k, v]) => document.documentElement.style.setProperty('--' + k, v));
+
+  /* =========================================================================
+     5. NAVIGATION
+     ========================================================================= */
+  let idx = 0;
+  const initParam = new URLSearchParams(window.location.search).get('slide') || window.location.hash.replace('#', '');
+  if (initParam) {
+    const sIdx = parseInt(initParam, 10) - 1;
+    if (!isNaN(sIdx) && sIdx >= 0 && sIdx < total) idx = sIdx;
+  }
+  if (new URLSearchParams(window.location.search).get('overview')) {
+    setTimeout(openOv, 50);
+  }
+  let locked = false;
+  let lockTimer = null;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  function refresh() {
+    slides.forEach((el, i) => {
+      el.classList.toggle('is-active', i === idx);
+      el.classList.toggle('is-before', i < idx);
+      el.classList.toggle('is-after', i > idx);
+      el.inert = i !== idx;
+      el.setAttribute('aria-hidden', String(i !== idx));
+    });
+    counter.textContent = pad(idx + 1) + ' / ' + pad(total);
+    progFill.style.transform = 'scaleX(' + (total > 1 ? idx / (total - 1) : 1) + ')';
+    progress.setAttribute('aria-valuenow', String(idx + 1));
+    progress.setAttribute('aria-valuetext', 'Slide ' + (idx + 1) + ' of ' + total);
+    btnPrev.disabled = idx === 0;
+    btnNext.disabled = idx === total - 1;
+  }
+
+  function go(n) {
+    n = Math.max(0, Math.min(total - 1, n));
+    if (n === idx || locked) return;
+    const jump = Math.abs(n - idx) > 1;
+    idx = n;
+    deck.classList.toggle('jump', jump);
+    refresh();
+    locked = true;
+    clearTimeout(lockTimer);
+    lockTimer = setTimeout(() => { locked = false; }, reduceMotion.matches ? 250 : (jump ? 600 : 820));
+  }
+  const next = () => go(idx + 1);
+  const prev = () => go(idx - 1);
+
+  btnPrev.addEventListener('click', () => { prev(); btnPrev.blur(); });
+  btnNext.addEventListener('click', () => { next(); btnNext.blur(); });
+
+  /* =========================================================================
+     6. OVERVIEW PANEL
+     ========================================================================= */
+  function buildOverview() {
+    const groups = [];
+    CONFIG.slides.forEach((s, i) => {
+      let g = groups.find(x => x.name === s.group);
+      if (!g) { g = { name: s.group, items: [] }; groups.push(g); }
+      g.items.push({ s, i });
+    });
+    ovBody.innerHTML = groups.map(g =>
+      '<section class="ov-group"><h3>' + g.name + '</h3><div class="ov-grid">' +
+      g.items.map(({ s, i }) =>
+        '<button type="button" class="ov-item" data-go="' + i + '"><span class="ov-n">' + pad(i + 1) + '</span><span>' + s.title + '</span></button>'
+      ).join('') + '</div></section>'
+    ).join('');
+  }
+  function openOv() {
+    ovBody.querySelectorAll('.ov-item').forEach((b, i) => b.setAttribute('aria-current', String(i === idx)));
+    ov.hidden = false;
+    btnOv.setAttribute('aria-expanded', 'true');
+    btnOv.setAttribute('aria-label', 'Close slide overview');
+    ovClose.focus();
+  }
+  function closeOv() {
+    ov.hidden = true;
+    btnOv.setAttribute('aria-expanded', 'false');
+    btnOv.setAttribute('aria-label', 'Open slide overview');
+    btnOv.focus();
+  }
+  const ovOpen = () => !ov.hidden;
+  function toggleOv() { ovOpen() ? closeOv() : openOv(); }
+
+  ovBody.addEventListener('click', e => {
+    const b = e.target.closest('[data-go]');
+    if (!b) return;
+    const target = Number(b.getAttribute('data-go'));
+    closeOv();
+    if (target !== idx) {
+      // Make sure the jump is not blocked by the transition lock
+      locked = false;
+      go(target);
+    }
+  });
+  ovClose.addEventListener('click', closeOv);
+  btnOv.addEventListener('click', toggleOv);
+
+  /* =========================================================================
+     7. FULLSCREEN
+     ========================================================================= */
+  function toggleFs() {
+    if (!document.fullscreenEnabled) return;
+    if (document.fullscreenElement) {
+      document.exitFullscreen().catch(() => {});
+    } else {
+      document.documentElement.requestFullscreen().catch(() => {});
+    }
+  }
+  function syncFs() {
+    const on = !!document.fullscreenElement;
+    document.body.classList.toggle('is-fs', on);
+    btnFs.setAttribute('aria-label', on ? 'Exit fullscreen' : 'Enter fullscreen');
+    btnFs.title = on ? 'Exit fullscreen (F or Esc)' : 'Fullscreen (F)';
+    btnFs.querySelector('.i-exp').hidden = on;
+    btnFs.querySelector('.i-cmp').hidden = !on;
+    wake();
+    fit();
+  }
+  btnFs.addEventListener('click', () => { toggleFs(); btnFs.blur(); });
+  document.addEventListener('fullscreenchange', syncFs);
+  btnFs.hidden = !document.fullscreenEnabled;
+
+  /* Controls auto-hide during fullscreen presentation and reappear on activity */
+  let idleTimer = null;
+  function wake() {
+    document.body.classList.remove('idle');
+    clearTimeout(idleTimer);
+    if (document.body.classList.contains('is-fs')) {
+      idleTimer = setTimeout(() => document.body.classList.add('idle'), 2500);
+    }
+  }
+  ['pointermove', 'pointerdown', 'touchstart', 'keydown'].forEach(ev =>
+    document.addEventListener(ev, wake, { passive: true })
+  );
+
+  /* =========================================================================
+     8. SCALING (fixed 16:9 canvas, fitted to any window)
+     ========================================================================= */
+  function fit() {
+    const s = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+    stage.style.transform = 'scale(' + s + ')';
+  }
+  window.addEventListener('resize', fit);
+
+  /* =========================================================================
+     9. KEYBOARD
+     ========================================================================= */
+  document.addEventListener('keydown', e => {
+    if (e.ctrlKey || e.metaKey || e.altKey) return;
+    const t = e.target;
+    if (t && t.closest && t.closest('input, textarea, select, [contenteditable="true"]')) return;
+
+    const k = e.key;
+
+    if (ovOpen()) {
+      if (k === 'Escape') { e.preventDefault(); closeOv(); }
+      else if (k === 'o' || k === 'O') { e.preventDefault(); closeOv(); }
+      return;
+    }
+
+    let handled = true;
+    switch (k) {
+      case 'ArrowRight': case 'PageDown': next(); break;
+      case 'ArrowLeft': case 'PageUp': prev(); break;
+      case ' ': case 'Spacebar': e.shiftKey ? prev() : next(); break;
+      case 'Home': go(0); break;
+      case 'End': go(total - 1); break;
+      case 'f': case 'F': toggleFs(); break;
+      case 'o': case 'O': openOv(); break;
+      default: handled = false;
+    }
+    if (handled) {
+      e.preventDefault();
+      if (t && t.tagName === 'BUTTON') t.blur();
+    }
+  });
+
+  /* =========================================================================
+     10. TOUCH SWIPE
+     ========================================================================= */
+  let touchX = null, touchY = null;
+  document.addEventListener('touchstart', e => {
+    if (ovOpen() || e.touches.length !== 1) { touchX = null; return; }
+    touchX = e.touches[0].clientX;
+    touchY = e.touches[0].clientY;
+  }, { passive: true });
+  document.addEventListener('touchend', e => {
+    if (touchX === null) return;
+    const dx = e.changedTouches[0].clientX - touchX;
+    const dy = e.changedTouches[0].clientY - touchY;
+    touchX = null;
+    if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.4) {
+      dx < 0 ? next() : prev();
+    }
+  }, { passive: true });
+
+  /* =========================================================================
+     11. START
+     ========================================================================= */
+  buildOverview();
+  refresh();
+  syncFs();
+  fit();
+  wake();
+})();
+</script>
+</body>
+</html>
